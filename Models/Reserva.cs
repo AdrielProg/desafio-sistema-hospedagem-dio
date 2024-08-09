@@ -37,12 +37,12 @@ namespace DesafioProjetoHospedagem.Models
                 }
                 else
                 {
-                    throw new CapacidadeExcedidaException();
+                    throw new CapacidadeExcedidaException("Capacidade da suite deve ser menor ou igual ao numero de hóspedes!");
                 }
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw new CapacidadeInvalidaException();
+                throw new CapacidadeInvalidaException("Argumento Invalido!");
             }
             return hospedes;
         }

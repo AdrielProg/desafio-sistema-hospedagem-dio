@@ -1,4 +1,5 @@
 
+using DesafioProjetoHospedagem.Exception;
 using Newtonsoft.Json;
 
 namespace DesafioProjetoHospedagem.Models
@@ -55,22 +56,34 @@ namespace DesafioProjetoHospedagem.Models
 
             Console.WriteLine("Quantos dias será a reserva? ");
             diasReservado = int.Parse(Console.ReadLine());
+            try
+            {
+                Reserva reserva = Reserva.CriarReserva(diasReservado);
+                Suite suite = EscolherSuite();
 
-            Reserva reserva = Reserva.CriarReserva(diasReservado);
-            Suite suite = EscolherSuite();
-            int idSuite = reserva.CadastrarSuite(suite);
-            reserva.CadastrarHospedes(hospedes);
-            Console.WriteLine(reserva.DiasReservados);
-            Reservas.Add(reserva);
-            ReservarSuite(idSuite);
+                if (suite == null)
+                {
+                    Console.WriteLine("Suite Indisponnível");
+                    return;
+                }
 
-            string comprovante = reserva.GerarComprovanteReserva();
-            Console.WriteLine(comprovante);
+                int idSuite = reserva.CadastrarSuite(suite);
+                reserva.CadastrarHospedes(hospedes);
+                Reservas.Add(reserva);
+                ReservarSuite(idSuite);
+                string comprovante = reserva.GerarComprovanteReserva();
+                Console.WriteLine(comprovante);
+            }
+            catch (CapacidadeExcedidaException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void CadastrarNovaSuite()
         {
-            throw new NotImplementedException();
+            Suite suite = Suite.CadastrarSuite();
+            Suites.Add(suite);
         }
 
         public void ExibirReservas()
