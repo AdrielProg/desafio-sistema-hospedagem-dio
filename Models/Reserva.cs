@@ -18,7 +18,7 @@ namespace DesafioProjetoHospedagem.Models
 
         public List<Pessoa> CadastrarHospedes(List<Pessoa> hospedes)
         {
-            Console.WriteLine("Quantos hospedes para essa reserva ? ");
+            Console.Write("Quantos hospedes para essa reserva: ");
             try
             {
                 string quantidadeHospedes = Console.ReadLine();
@@ -75,10 +75,10 @@ namespace DesafioProjetoHospedagem.Models
         public static List<Pessoa> MenuInformacoesCadastrais(List<Pessoa> hospedes, int quantidadeHospedes)
         {
             int contador;
-            Console.WriteLine("Cadastro de Hospede\n");
+            Console.WriteLine("\n--------Cadastro de Hospede-----------\n");
             for (contador = 1; contador <= quantidadeHospedes; contador++)
             {
-                Console.Write($"Hospede: {contador}°");
+                Console.WriteLine($"{contador}° Hospede");
                 Console.Write("Nome: ");
                 string nome = Console.ReadLine();
                 Console.Write("Sobrenome: ");
@@ -86,6 +86,8 @@ namespace DesafioProjetoHospedagem.Models
 
                 Pessoa hospede = Pessoa.CriarPessoa(nome, sobrenome);
                 hospedes.Add(hospede);
+
+                Console.WriteLine();
             }
             return hospedes;
         }
@@ -98,7 +100,7 @@ namespace DesafioProjetoHospedagem.Models
         public string GerarComprovanteReserva()
         {
             string hospedesInfo = Hospedes != null && Hospedes.Count > 0
-                ? string.Join(", ", Hospedes.ConvertAll(h => h.Nome))
+                ? string.Join("\n".PadRight(19), Hospedes.ConvertAll(h => h.NomeCompletoFormatado()))
                 : "Nenhum hóspede registrado";
 
             string suiteInfo = Suite != null
@@ -106,12 +108,12 @@ namespace DesafioProjetoHospedagem.Models
                 : "Nenhuma suíte selecionada";
 
             return $@"
-            Descrição da Reserva:
-            ----------------------
-            Hóspedes: {hospedesInfo}
-            Suíte: {suiteInfo}
-            Dias Reservados: {DiasReservados}";
-
+       --------- Descrição da Reserva ----------
+       -----------------------------------------
+        Hóspedes: {hospedesInfo}
+        {suiteInfo}
+        Dias Reservados: {DiasReservados}
+        Valor Total: {CalcularValorDiaria():C}";
         }
 
     }

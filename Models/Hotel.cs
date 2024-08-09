@@ -13,10 +13,7 @@ namespace DesafioProjetoHospedagem.Models
         public List<Suite> SuitesOcupadas { get; set; } = new List<Suite>();
         public List<Reserva> Reservas { get; set; } = new List<Reserva>();
 
-        public Hotel()
-        {
-
-        }
+        public Hotel() { }
         public Hotel(int id, string nome, string endereco)
         {
             Id = id;
@@ -54,7 +51,7 @@ namespace DesafioProjetoHospedagem.Models
             List<Pessoa> hospedes = new();
             int diasReservado;
 
-            Console.WriteLine("Quantos dias será a reserva? ");
+            Console.Write("Quantos dias será a reserva: ");
             diasReservado = int.Parse(Console.ReadLine());
             try
             {
@@ -75,6 +72,10 @@ namespace DesafioProjetoHospedagem.Models
                 Console.WriteLine(comprovante);
             }
             catch (CapacidadeExcedidaException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (CapacidadeInvalidaException ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -104,13 +105,10 @@ namespace DesafioProjetoHospedagem.Models
         public Suite EscolherSuite()
         {
             string numeroSuite;
-            Console.WriteLine("Suites disponíveis: \n");
 
-            foreach (var suite in Suites)
-            {
-                Console.WriteLine(suite.GerarDescricaoSuite());
-            }
-            Console.Write("\nQual será a suite escolhida ?");
+            ListarSuites();
+
+            Console.Write("\nQual será a suite escolhida: ");
             numeroSuite = Console.ReadLine();
 
             if (!int.TryParse(numeroSuite, out int id))
@@ -138,6 +136,8 @@ namespace DesafioProjetoHospedagem.Models
                 Console.WriteLine("Nenhuma suíte disponível.");
                 return;
             }
+
+            Console.WriteLine("\n----------Suites disponíveis----------- \n");
 
             foreach (var suite in Suites)
             {

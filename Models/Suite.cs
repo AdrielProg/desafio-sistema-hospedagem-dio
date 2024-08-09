@@ -17,7 +17,11 @@ namespace DesafioProjetoHospedagem.Models
         public decimal ValorDiaria { get; set; }
         public string GerarDescricaoSuite()
         {
-            return $@"Suite n°{Id}: {TipoSuite} - Valor da Diaria:{ValorDiaria}";
+            return $@"
+        Suite n°{Id}: {TipoSuite}
+        Valor da Diária: {ValorDiaria:C}
+        Capacidade: {Capacidade}
+        ";
         }
         public static Suite CadastrarSuite()
         {
